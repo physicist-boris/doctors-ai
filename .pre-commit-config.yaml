@@ -1,0 +1,29 @@
+repos:
+- repo: local
+  hooks:
+    - id: pylint
+      name: pylint
+      entry: pylint
+      language: system
+      types: [python]
+      args:
+        [
+          "-rn", # Only display messages
+          "-sn", # Don't display the score
+          "--rcfile=pylintrc"
+        ]
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.8.0
+  hooks:
+    - id: mypy
+      exclude: '(notebooks|tests)/.*'
+      args: [--strict, --ignore-missing-imports]
+- repo: https://github.com/jendrikseipp/vulture
+  rev: 'v2.3'  # or any later Vulture version
+  hooks:
+    - id: vulture
+- repo: https://github.com/yunojuno/pre-commit-xenon
+  rev: cc59b0431a5d072786b59430e9b342b2881064f6
+  hooks:
+  - id: xenon
+    args: ["--max-average=A", "--max-modules=B", "--max-absolute=B"] 

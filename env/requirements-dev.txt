@@ -1,0 +1,7 @@
+-r requirements.txt
+pre-commit
+mypy
+pylint
+vulture
+pytest==7.4.1
+pytest-cov==4.1.0

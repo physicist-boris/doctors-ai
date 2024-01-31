@@ -1,0 +1,24 @@
+# Python tools for Visual Studio
+__pycache__/
+
+*.pyc
+
+# Python ML and artefacts
+.conda/
+.vscode/
+data/
+mlruns/
+results/
+outputs/
+artefacts/
+
+*.log
+
+# mypy
+.mypy_cache/
+
+.dmypy.json
+dmypy.json
+
+# Testing
+.pytest_cache/

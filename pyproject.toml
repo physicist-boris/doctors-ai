@@ -1,2 +1,14 @@
+[build-system]
+requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
+
+
+[project]
+name = "doctors_ai"
+version = "2024.02"
+dynamic = [
+    "dependencies",
+    "optional-dependencies",
+]
+
 [tool.vulture]
 paths = ["notebook"]

@@ -38,3 +38,15 @@ pip install -e .
 python server_app\app.py
 ```
 
+### Run a query
+
+```
+curl -X POST -H "Content-Type: application/json" -d '{"date": "2021-12-30"}' http://localhost:5000/predict
+```
+
+```
+{
+    "predicted_number_admissions": 8,
+    "number_in_ed": 17
+}
+```

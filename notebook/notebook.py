@@ -37,9 +37,9 @@ column_transformer = ColumnTransformer(
 )
 
 pipe = make_pipeline(column_transformer, StandardScaler(), LogisticRegression())
-fitted_train = pipe.fit(df_train_x, df_train_y)
+pipe.fit(df_train_x, df_train_y)
 
-predicted = pipe.predict(df_test_x)
+# predicted = pipe.predict(df_test_x)
 predicted_probs = pipe.predict_proba(df_test_x)[:, 1]
 
 truth = df_test_y

@@ -29,3 +29,12 @@ pip install -r env/requirements-dev.txt
 ```
 pre-commit install
 ```
+
+### Setup the server
+
+```
+pip install -r env/requirements-server.txt
+pip install -e .
+python server_app\app.py
+```
+

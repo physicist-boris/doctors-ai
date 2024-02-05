@@ -25,24 +25,11 @@ def get_predictions(date):
     else:
         return None
 
-
-# Main layout
-col1, col2 = st.columns(2)
-
-with col1:
-    st.subheader('Number of people in the ED:')
-    if st.button('Get Data'):
-        predictions = get_predictions(datetime)
-        if predictions:
-            st.success(f"{predictions['number_in_ed']}")
-        else:
-            st.error("API connection fail")
-
-with col2:
-    st.subheader('Estimate of people that will be admitted:')
-    if st.button('Get Prediction'):
-        predictions = get_predictions(datetime)
-        if predictions:
-            st.success(f"{predictions['predicted_number_admissions']}")
-        else:
-            st.error("API connection fail")
+# Button to get data and prediction
+if st.sidebar.button('Get ED Data and Prediction'):
+    predictions = get_predictions(datetime)
+    if predictions:
+        st.success(f"Number of people in the ED: {predictions['number_in_ed']}")
+        st.success(f"Estimate of people that will be admitted: {predictions['predicted_number_admissions']}")
+    else:
+        st.error("API connection fail")

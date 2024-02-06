@@ -11,7 +11,7 @@ st.title('AI-Doctors')
 st.sidebar.header('Input Parameters')
 date = st.sidebar.date_input("Select a date")
 
-# Combine date and time into a datetime object
+# Convert date to a string
 date = f"{date}"
 
 # Endpoint of the Flask server

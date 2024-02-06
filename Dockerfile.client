@@ -1,0 +1,74 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# NOTE:
+#       If you are copying folders, the CONTENT of the origin folder will be copied
+#       inside the target folder. This is not what you would originally
+#       expect. So if you must, copy folders separately
+
+# Suggested step 1: Install requirements
+# ------ Requirements installation ------
+
+############## START OF METHOD 1 ###############
+# Installing package with constraint
+#   If your requirements.txt contains ALL of your requirements (for all your packages in ALL extras),
+#   you can do a setup where you decide to install the package . with extra client, constrained to
+#   a set of specific requirements version.
+#   Obtained using:
+#     $ pip install -e '.[all]' ; pip freeze --exclude bank_marketing -l > requirements.txt
+#     or
+#     $ pip install -e '.[all]' ; pip freeze --exclude-editable -l > requirements.txt
+#     or
+#       (any other way getting you a requirements.txt)
+#   Pros:
+#     - Easy to understand
+#   Cons:
+#     - Since setup.py, setup.cfg and pyproject.toml are necessary to do a pip install . ,
+#       it is easier to invalidate the cache. How could this happen? Updating pyproject.toml
+#       for example to update the description would trigger a build cache invalidation.
+#     - Since we are doing a pip install . before having the source code, we create a temp
+#       directory /app/src/ and trick pip into installing it ; more code to maintain, albeit
+#       not too difficult.
+# Instructions (uncomment to use):
+# COPY setup.cfg setup.py pyproject.toml requirements.txt /app/
+# RUN mkdir /app/src && pip install --no-cache-dir '.[client]' -c requirements.txt && rm -r /app/src
+# COPY src /app/src
+# RUN pip install --no-cache-dir --no-deps .
+
+############## END OF METHOD 1 #################
+
+############## START OF METHOD 2 ###############
+# Installing package via requirements files
+#   In this scenario, the requirements contains _specific_ requirements for what you want
+#   to install. This means you need to generate a dedicated requirements ; in this case,
+#   we have generated a requirements/client.requirements.txt file that contains the
+#   versioned packages necessary to run the client, equivalent to having done:
+#   Obtained using:
+#     $ pip-compile --strip-extras --extra client --output-file requirements/client.requirements.txt (Way 1)
+#     or 
+#     $ pip install .[client] ; pip freeze -l > requirements/client.requirements.txt (Way 2)
+#   Pros:
+#     - Only changes in requirements file will trigger re-installation
+#     - Very similar with the usual installation via: pip install -r requirements.txt
+#   Cons:
+#     - Way 1 necessitates an extra tool: pip-tools ; a good addition nevertheless
+#     - Way 2 necessitates that you have a clean python installation when exporting requirements
+#       which is harder to guarantee over long time projects.
+# Instructions (uncomment to use):
+
+COPY env/requirements-client.txt /app/
+RUN pip install --no-cache-dir -r requirements-client.txt
+
+############## END OF METHOD 2 #################
+
+# Suggested step 2: Add application
+COPY streamlit_app /app/streamlit_app
+
+
+# Suggested step 3: Configure runtime
+
+WORKDIR /app/streamlit_app
+
+ENV STREAMLIT_SERVER_ADDRESS="0.0.0.0"
+CMD [ "streamlit", "run", "app.py" ]

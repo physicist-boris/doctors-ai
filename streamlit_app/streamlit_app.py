@@ -1,4 +1,5 @@
 '''A tiny Streamlit application to serve as a front-end'''
+import os
 import streamlit as st
 import requests # type: ignore[import-untyped]
 
@@ -14,8 +15,10 @@ date = st.sidebar.date_input("Select a date")
 # Convert date to a string
 date = f"{date}"
 
+FLASK_SERVER_URL = os.getenv("FLASK_SERVER_URL", "http://localhost:5000/predict")
+
 # Endpoint of the Flask server
-FLASK_SERVER_URL = "http://localhost:5000/predict"  # Change to your Flask server URL
+# FLASK_SERVER_URL = "http://localhost:5000/predict"  # Change to your Flask server URL
 
 def get_predictions(date1: str) -> requests.Response:
     """Function to send POST request to Flask server

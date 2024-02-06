@@ -1,0 +1,23 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    ports:
+      - 6000:6000
+    environment:
+      - DB_LOCATION=/data/ed_visit.db
+      - MODEL_LOCATION=/data/model.joblib
+    volumes:
+      - ./data:/data
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    container_name: client-ui
+    depends_on:
+      - server
+    ports:
+      - "8501:8501"
+    environment:
+      - FLASK_SERVER_URL=http://server:6000/predict

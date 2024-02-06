@@ -5,3 +5,4 @@ pyarrow
 flask
 flask_restful
 python-dotenv
+uvicorn

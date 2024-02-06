@@ -1,0 +1,19 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY env/requirements-server.txt /app/
+
+RUN pip install --no-cache-dir -r requirements-server.txt
+
+COPY setup.py pyproject.toml /app/
+COPY src /app/src
+RUN pip install --no-cache-dir --no-deps .
+
+COPY server_app /app/server_app
+
+WORKDIR /app/server_app
+
+EXPOSE 6000
+ENV UVICORN_PORT=6000
+CMD [ "uvicorn", "run:app", "--host", "0.0.0.0" ]

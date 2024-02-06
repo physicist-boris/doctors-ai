@@ -28,3 +28,4 @@ pyvenv.cfg
 Scripts/
 Lib/
 src/doctors_ai.egg-info/
+venv

@@ -1,0 +1,6 @@
+streamlit
+pandas
+numpy
+requests
+doctors_ai
+types-requests

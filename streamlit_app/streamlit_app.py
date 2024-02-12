@@ -15,7 +15,7 @@ date = st.sidebar.date_input("Select a date")
 # Convert date to a string
 date = f"{date}"
 
-FLASK_SERVER_URL = os.getenv("FLASK_SERVER_URL", "http://localhost:5000/predict")
+FLASK_SERVER_URL = os.getenv("FLASK_SERVER_URL", "http://localhost:3000/predict")
 
 # Endpoint of the Flask server
 # FLASK_SERVER_URL = "http://localhost:5000/predict"  # Change to your Flask server URL
@@ -26,7 +26,11 @@ def get_predictions(date1: str) -> requests.Response:
     Args:
         date1 (str): The date as a str (YYYY-MM-DD)
     """
-    response = requests.post(FLASK_SERVER_URL, json={'date': date1}, timeout=120)
+    headers = {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+    }
+    response = requests.post(FLASK_SERVER_URL, headers=headers,json={'date': date1}, timeout=120)
     if response.status_code == 200:
         return response.json()
     return None

@@ -28,14 +28,11 @@ class Preds(Resource): #type: ignore
         """
         Returns the JSON for predicted number of admissions and number in ed by date
         """
-        print("borirs")
         json_ = request.json
-        print(json_)
         date = json_['date']
         # Make predictions using date
         predicted_number_admissions, number_in_ed = \
             output(date, MINIO_API_HOST, MINIO_ACCESS_KEY, MINIO_SECRET_KEY, DB_LOCATION)
-        print("success")
         res = {'predicted_number_admissions': predicted_number_admissions,
                'number_in_ed': number_in_ed}
         return res, 200  # Send the response object

@@ -12,7 +12,8 @@ results/
 outputs/
 artefacts/
 doctors-ai-venv
-
+minio/
+notebook/darft.ipynb
 *.log
 
 # mypy
@@ -28,3 +29,8 @@ pyvenv.cfg
 Scripts/
 Lib/
 src/doctors_ai.egg-info/
+venv
+dist/
+build/
+mlartifacts/
+src/doctors_ai_pipeline_training.egg-info/

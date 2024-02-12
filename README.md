@@ -38,6 +38,15 @@ pip install -e .
 python server_app\app.py
 ```
 
+### Setup automated pipeline
+
+```
+cd src
+python setup.py install
+cd doctors_ai
+python full_pipeline.py
+```
+
 ### Run a query
 
 ```
